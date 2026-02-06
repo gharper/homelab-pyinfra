@@ -1,0 +1,27 @@
+# SSH Daemon Configuration
+# Managed by pyinfra - DO NOT EDIT MANUALLY
+
+Port {{ ssh_port | default(22) }}
+Protocol 2
+
+# Authentication
+PermitRootLogin {{ ssh_permit_root_login | default('no') }}
+PubkeyAuthentication {{ ssh_pubkey_authentication | default('yes') }}
+PasswordAuthentication {{ ssh_password_authentication | default('no') }}
+ChallengeResponseAuthentication no
+UsePAM yes
+
+# Security
+X11Forwarding no
+MaxAuthTries 3
+MaxSessions 10
+
+# Allow client to pass locale environment variables
+AcceptEnv LANG LC_*
+
+# Override defaults
+Subsystem sftp {{ sftp_server_path }}
+
+# Logging
+SyslogFacility AUTH
+LogLevel INFO
